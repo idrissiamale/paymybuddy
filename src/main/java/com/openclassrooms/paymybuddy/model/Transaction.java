@@ -3,12 +3,14 @@ package com.openclassrooms.paymybuddy.model;
 import com.openclassrooms.paymybuddy.TransactionType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "transaction")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -29,7 +31,4 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
-    public Transaction() {
-    }
 }

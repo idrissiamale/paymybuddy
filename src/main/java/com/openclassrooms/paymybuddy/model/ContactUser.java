@@ -2,6 +2,7 @@ package com.openclassrooms.paymybuddy.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "contact_user")
 public class ContactUser {
@@ -26,7 +28,4 @@ public class ContactUser {
 
     @OneToMany(targetEntity = Payment.class, mappedBy = "contactUser")
     private List<Payment> payments = new ArrayList<>();
-
-    public ContactUser() {
-    }
 }
