@@ -9,10 +9,11 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "debit")
 @PrimaryKeyJoinColumn(name = "id")
 public class Debit extends Transaction {
+    public Debit() {
+        super();
+    }
 }
