@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -21,6 +23,9 @@ public class ContactUser {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @OneToMany(targetEntity = Payment.class, mappedBy = "contactUser")
+    private List<Payment> payments = new ArrayList<>();
 
     public ContactUser() {
     }

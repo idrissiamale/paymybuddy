@@ -11,9 +11,10 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "transaction")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Transaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
     @Column(name = "date", nullable = false)
