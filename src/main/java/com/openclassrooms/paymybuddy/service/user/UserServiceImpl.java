@@ -1,4 +1,4 @@
-package com.openclassrooms.paymybuddy.service;
+package com.openclassrooms.paymybuddy.service.user;
 
 import com.openclassrooms.paymybuddy.model.User;
 import com.openclassrooms.paymybuddy.repository.UserRepository;
@@ -13,37 +13,37 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public List<User> getUsers() {
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
     @Override
-    public User getUserById(int id) {
+    public User findById(int id) {
         return userRepository.findById(id).orElse(null);
     }
 
     @Override
-    public User getUserByEmail(String email) {
+    public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
-    public User getUserByEmailAndPassword(String email, String password) {
+    public User findByEmailAndPassword(String email, String password) {
         return userRepository.findByEmailAndPassword(email, password);
     }
 
     @Override
-    public User saveUser(User user) {
+    public User save(User user) {
         return userRepository.save(user);
     }
 
     @Override
-    public List<User> saveUsers(List<User> users) {
+    public List<User> saveAll(List<User> users) {
         return userRepository.saveAll(users);
     }
 
     @Override
-    public User updateUser(User user) {
+    public User update(User user) {
         User userToUpdate = userRepository.findById(user.getId()).orElse(null);
         userToUpdate.setName(user.getName());
         userToUpdate.setEmail(user.getEmail());
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(int id) {
+    public void deleteById(int id) {
         userRepository.deleteById(id);
     }
 

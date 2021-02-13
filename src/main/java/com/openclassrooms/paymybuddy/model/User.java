@@ -31,8 +31,8 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Account account;
 
-    @OneToMany(targetEntity = ContactUser.class, mappedBy = "user")
-    private List<ContactUser> contactUserList = new ArrayList<>();
+    @OneToMany(targetEntity = Contact.class, mappedBy = "user")
+    private List<Contact> contactList = new ArrayList<>();
 
     @OneToMany(targetEntity = Transaction.class, mappedBy = "user")
     private List<Transaction> transactions = new ArrayList<>();

@@ -1,22 +1,20 @@
 package com.openclassrooms.paymybuddy.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "contact_user")
-public class ContactUser {
+@Table(name = "contact")
+public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String name;
 
@@ -26,6 +24,11 @@ public class ContactUser {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(targetEntity = Payment.class, mappedBy = "contactUser")
-    private List<Payment> payments = new ArrayList<>();
+    @OneToMany(mappedBy = "contact")
+    private Set<ContactTransaction> contactTransactions = new HashSet<>();
+
+    public Contact(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
 }

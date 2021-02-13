@@ -1,4 +1,4 @@
-package com.openclassrooms.paymybuddy.service;
+package com.openclassrooms.paymybuddy.service.transaction;
 
 import org.springframework.stereotype.Service;
 
