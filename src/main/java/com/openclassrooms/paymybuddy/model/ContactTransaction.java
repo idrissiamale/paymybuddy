@@ -15,20 +15,19 @@ public class ContactTransaction {
     @EmbeddedId
     private ContactTransactionId id;
 
-    @ManyToOne
-    @MapsId("contactId")
-    @JoinColumn(name = "contact_id")
-    private Contact contact;
-
-    @ManyToOne
-    @MapsId("transactionId")
-    @JoinColumn(name = "transaction_id")
-    private Transaction transaction;
-
     @Column(name = "contact_name")
     private String contactName;
-
     private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @MapsId("contactId")
+    @JoinColumn(name = "contact_id", nullable = false)
+    private Contact contact;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @MapsId("transactionId")
+    @JoinColumn(name = "transaction_id", nullable = false)
+    private Transaction transaction;
 
     public ContactTransaction(Contact contact, Transaction transaction, String contactName, String description) {
         this.id = new ContactTransactionId(contact.getId(), transaction.getId());

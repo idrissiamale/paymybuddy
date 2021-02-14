@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -20,19 +19,17 @@ public class Transaction {
 
     @Column(name = "date", nullable = false)
     private Date transactionDate;
-
     private double amount;
-
     @Column(name = "transaction_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "transaction")
-    private Set<ContactTransaction> contactTransactions = new HashSet<>();
+    @OneToMany(mappedBy = "transaction", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<ContactTransaction> contactTransactions;
 
     public Transaction(Date transactionDate, double amount, TransactionType transactionType) {
         this.transactionDate = transactionDate;

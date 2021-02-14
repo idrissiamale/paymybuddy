@@ -17,14 +17,14 @@ public class Contact {
     private Integer id;
 
     private String name;
-
+    @Column(unique = true)
     private String email;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "contact")
+    @OneToMany(mappedBy = "contact", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<ContactTransaction> contactTransactions = new HashSet<>();
 
     public Contact(String name, String email) {
