@@ -1,11 +1,14 @@
 package com.openclassrooms.paymybuddy.service.user;
 
+import com.openclassrooms.paymybuddy.exception.BadArgumentException;
+import com.openclassrooms.paymybuddy.exception.ResourceNotFoundException;
 import com.openclassrooms.paymybuddy.model.User;
 import com.openclassrooms.paymybuddy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -18,8 +21,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(int id) {
-        return userRepository.findById(id).orElse(null);
+    public User findById(Integer id) {
+        Optional<User> userFound = userRepository.findById(id);
+        if (userFound.isPresent()) {
+            return userFound.get();
+        } else {
+            throw new ResourceNotFoundException("User not found with id " + id);
+        }
     }
 
     @Override
@@ -34,7 +42,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User user) {
-        return userRepository.save(user);
+        if (user.getId() != null) {
+            throw new BadArgumentException("User with id " + user.getId() + " already exists in our database.");
+        } else {
+            return userRepository.save(user);
+        }
     }
 
     @Override
@@ -43,18 +55,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(User user) {
-        User userToUpdate = userRepository.findById(user.getId()).orElse(null);
-        userToUpdate.setName(user.getName());
-        userToUpdate.setEmail(user.getEmail());
-        userToUpdate.setPassword(user.getPassword());
-        return userRepository.save(userToUpdate);
+    public User update(Integer id, User user) {
+        return userRepository.findById(id).map(userToUpdate -> {
+            userToUpdate.setName(user.getName());
+            userToUpdate.setEmail(user.getEmail());
+            userToUpdate.setPassword(user.getPassword());
+            return userRepository.save(userToUpdate);
+        }).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     }
+
 
     @Override
-    public void deleteById(int id) {
-        userRepository.deleteById(id);
+    public String deleteById(Integer id) {
+        return userRepository.findById(id).map(userToDelete -> {
+            userRepository.deleteById(id);
+            return "Delete Successfully";
+        }).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     }
-
-
 }

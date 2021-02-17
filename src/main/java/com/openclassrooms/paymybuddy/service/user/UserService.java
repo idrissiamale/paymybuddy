@@ -7,7 +7,7 @@ import java.util.List;
 public interface UserService {
     List<User> findAll();
 
-    User findById(int id);
+    User findById(Integer id);
 
     User findByEmail(String email);
 
@@ -17,7 +17,7 @@ public interface UserService {
 
     List<User> saveAll(List<User> users);
 
-    User update(User user);
+    User update(Integer id, User user);
 
-    void deleteById(int id);
+    String deleteById(Integer id);
 }
