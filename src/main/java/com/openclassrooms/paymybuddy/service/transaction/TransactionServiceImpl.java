@@ -3,6 +3,7 @@ package com.openclassrooms.paymybuddy.service.transaction;
 import com.openclassrooms.paymybuddy.TransactionType;
 import com.openclassrooms.paymybuddy.exception.ResourceNotFoundException;
 import com.openclassrooms.paymybuddy.model.Transaction;
+import com.openclassrooms.paymybuddy.repository.ContactRepository;
 import com.openclassrooms.paymybuddy.repository.TransactionRepository;
 import com.openclassrooms.paymybuddy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class TransactionServiceImpl implements TransactionService {
     private TransactionRepository transactionRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ContactRepository contactRepository;
 
     @Override
     public List<Transaction> findAll() {
@@ -53,6 +56,7 @@ public class TransactionServiceImpl implements TransactionService {
                     transactionToUpdate.setTransactionDate(transaction.getTransactionDate());
                     transactionToUpdate.setAmount(transaction.getAmount());
                     transactionToUpdate.setTransactionType(transaction.getTransactionType());
+                    transactionToUpdate.setDescription(transaction.getDescription());
                     return transactionRepository.save(transactionToUpdate);
                 }).orElseThrow(() -> new ResourceNotFoundException("Transaction with id: " + transactionId + "not found"));
     }

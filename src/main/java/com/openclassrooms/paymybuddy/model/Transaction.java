@@ -8,7 +8,6 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -25,18 +24,23 @@ public class Transaction {
     @Column(name = "transaction_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
+    private String description;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    @OneToMany(mappedBy = "transaction", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<ContactTransaction> contactTransactions;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "contact_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Contact contact;
 
-    public Transaction(Date transactionDate, double amount, TransactionType transactionType) {
+
+    public Transaction(Date transactionDate, double amount, TransactionType transactionType, String description) {
         this.transactionDate = transactionDate;
         this.amount = amount;
         this.transactionType = transactionType;
+        this.description = description;
     }
 }
