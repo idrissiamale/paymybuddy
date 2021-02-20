@@ -21,8 +21,9 @@ public class AccountController {
     public List<Account> getAllAccounts() {
         return accountService.findAll();
     }
+
     @GetMapping("/users/{userId}/account")
-    public Account findUserById(@PathVariable Integer userId) {
+    public Account findAccountByUserId(@PathVariable Integer userId) {
         return accountService.findByUserId(userId);
     }
 }
