@@ -22,6 +22,11 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
+    public Contact findById(Integer id) {
+        return contactRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User not found with id " + id));
+    }
+
+    @Override
     public List<Contact> findByUserId(Integer userId) {
         if (!userRepository.existsById(userId)) {
             throw new ResourceNotFoundException("User not found with id: " + userId);

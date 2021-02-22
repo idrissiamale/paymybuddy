@@ -1,46 +1,39 @@
 package com.openclassrooms.paymybuddy.model;
 
-import com.openclassrooms.paymybuddy.TransactionType;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
-@NoArgsConstructor
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "Type", discriminatorType = DiscriminatorType.STRING)
 @Table(name = "transaction")
-public class Transaction {
+public abstract class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "date", nullable = false)
-    private Date transactionDate;
+    @CreationTimestamp
+    private LocalDateTime transactionDate;
+
     private double amount;
-    @Column(name = "transaction_type", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private TransactionType transactionType;
-    private String description;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "contact_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Contact contact;
+    public Transaction() {
+    }
 
-
-    public Transaction(Date transactionDate, double amount, TransactionType transactionType, String description) {
+    public Transaction(LocalDateTime transactionDate, double amount) {
         this.transactionDate = transactionDate;
         this.amount = amount;
-        this.transactionType = transactionType;
-        this.description = description;
     }
 }

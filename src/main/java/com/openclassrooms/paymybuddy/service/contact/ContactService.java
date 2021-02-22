@@ -7,6 +7,8 @@ import java.util.List;
 public interface ContactService {
     List<Contact> findAll();
 
+    Contact findById(Integer id);
+
     List<Contact> findByUserId(Integer userId);
 
     Contact findByEmail(String email);
