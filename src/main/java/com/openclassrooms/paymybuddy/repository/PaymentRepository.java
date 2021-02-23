@@ -1,7 +1,13 @@
 package com.openclassrooms.paymybuddy.repository;
 
-import org.springframework.stereotype.Repository;
+import com.openclassrooms.paymybuddy.model.Payment;
+import org.springframework.data.jpa.repository.Query;
 
-@Repository
-public interface PaymentRepository extends TransactionRepository {
+import javax.transaction.Transactional;
+import java.util.List;
+
+@Transactional
+public interface PaymentRepository extends TransactionBaseRepository<Payment> {
+    @Query("from Payment")
+    List<Payment> findAllPayments();
 }

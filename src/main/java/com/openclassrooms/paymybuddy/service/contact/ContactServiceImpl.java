@@ -23,7 +23,7 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public Contact findById(Integer id) {
-        return contactRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User not found with id " + id));
+        return contactRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Contact not found with id " + id));
     }
 
     @Override

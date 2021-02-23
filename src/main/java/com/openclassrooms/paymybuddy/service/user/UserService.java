@@ -19,5 +19,5 @@ public interface UserService {
 
     User update(Integer id, User user);
 
-    String deleteById(Integer id);
+    void deleteById(Integer id);
 }

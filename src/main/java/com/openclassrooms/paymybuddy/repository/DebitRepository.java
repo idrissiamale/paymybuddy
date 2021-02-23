@@ -1,7 +1,13 @@
 package com.openclassrooms.paymybuddy.repository;
 
-import org.springframework.stereotype.Repository;
+import com.openclassrooms.paymybuddy.model.Debit;
+import org.springframework.data.jpa.repository.Query;
 
-@Repository
-public interface DebitRepository extends TransactionRepository {
+import javax.transaction.Transactional;
+import java.util.List;
+
+@Transactional
+public interface DebitRepository extends TransactionBaseRepository<Debit> {
+    @Query("from Debit")
+    List<Debit> findAllDebits();
 }

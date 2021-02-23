@@ -1,7 +1,14 @@
 package com.openclassrooms.paymybuddy.repository;
 
-import org.springframework.stereotype.Repository;
+import com.openclassrooms.paymybuddy.model.Credit;
+import org.springframework.data.jpa.repository.Query;
 
-@Repository
-public interface CreditRepository extends TransactionRepository {
+import javax.transaction.Transactional;
+import java.util.List;
+
+@Transactional
+public interface CreditRepository extends TransactionBaseRepository<Credit> {
+    @Query("from Credit")
+    List<Credit> findAllCredits();
 }
+
