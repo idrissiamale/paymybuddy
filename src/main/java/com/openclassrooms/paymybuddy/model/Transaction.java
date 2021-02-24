@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "Type", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "transaction_type", discriminatorType = DiscriminatorType.STRING)
 @Table(name = "transaction")
 public abstract class Transaction {
     @Id
