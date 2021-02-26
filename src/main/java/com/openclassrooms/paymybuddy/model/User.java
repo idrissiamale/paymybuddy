@@ -16,11 +16,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
-    private String address;
-    private String city;
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
     @Column(unique = true)
     private String email;
+
     private String password;
 
     @OneToOne(fetch = FetchType.LAZY,
@@ -29,10 +33,9 @@ public class User {
     @JsonIgnoreProperties("user")
     private Account account;
 
-    public User(String name, String address, String city, String email, String password) {
-        this.name = name;
-        this.address = address;
-        this.city = city;
+    public User(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
     }

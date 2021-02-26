@@ -22,9 +22,14 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
+    public BankAccount findById(Integer id) {
+        return bankAccountRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Bank Account not found with id " + id));
+    }
+
+    @Override
     public List<BankAccount> findByAccountId(Integer accountId) {
         if (!accountRepository.existsById(accountId)) {
-            throw new ResourceNotFoundException("User not found with id: " + accountId);
+            throw new ResourceNotFoundException("Account not found with id: " + accountId);
         }
         return bankAccountRepository.findByAccountId(accountId);
     }
@@ -40,16 +45,16 @@ public class BankAccountServiceImpl implements BankAccountService {
         return accountRepository.findById(accountId).map(account -> {
             bankAccount.setAccount(account);
             return bankAccountRepository.save(bankAccount);
-        }).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + accountId));
+        }).orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + accountId));
     }
 
     @Override
     public BankAccount update(Integer accountId, Integer bankAccountId, BankAccount bankAccount) {
         if (!accountRepository.existsById(accountId)) {
-            throw new ResourceNotFoundException("User not found with id: " + accountId);
+            throw new ResourceNotFoundException("Account not found with id: " + accountId);
         }
         return bankAccountRepository.findById(bankAccountId)
-                .map(bankAccountToUpdate-> {
+                .map(bankAccountToUpdate -> {
                     bankAccountToUpdate.setIban(bankAccount.getIban());
                     bankAccountToUpdate.setName(bankAccount.getName());
                     return bankAccountRepository.save(bankAccountToUpdate);
@@ -59,7 +64,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public String delete(Integer accountId, Integer bankAccountId) {
         if (!accountRepository.existsById(accountId)) {
-            throw new ResourceNotFoundException("User not found with id: " + accountId);
+            throw new ResourceNotFoundException("Account not found with id: " + accountId);
         }
         return bankAccountRepository.findById(bankAccountId)
                 .map(bankAccountToDelete -> {

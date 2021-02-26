@@ -22,16 +22,16 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account findByUserId(Integer userId) {
+    public Account findById(Integer id) {
+        return accountRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Account not found with id " + id));
+    }
+
+    @Override
+    public List<Account> findByUserId(Integer userId) {
         if (!userRepository.existsById(userId)) {
             throw new ResourceNotFoundException("User not found with id: " + userId);
         }
-        List<Account> accounts = accountRepository.findByUserId(userId);
-        if (accounts.size() > 0) {
-            return accounts.get(0);
-        } else {
-            throw new ResourceNotFoundException("Account not found!");
-        }
+        return accountRepository.findByUserId(userId);
     }
 
     @Override

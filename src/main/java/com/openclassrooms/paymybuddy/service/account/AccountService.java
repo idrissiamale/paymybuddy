@@ -7,7 +7,9 @@ import java.util.List;
 public interface AccountService {
     List<Account> findAll();
 
-    Account findByUserId(Integer userId);
+    Account findById(Integer id);
+
+    List<Account> findByUserId(Integer userId);
 
     Account save(Integer userId, Account account);
 

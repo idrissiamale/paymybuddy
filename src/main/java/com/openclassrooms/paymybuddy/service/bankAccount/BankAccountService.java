@@ -7,6 +7,8 @@ import java.util.List;
 public interface BankAccountService {
     List<BankAccount> findAll();
 
+    BankAccount findById(Integer id);
+
     List<BankAccount> findByAccountId(Integer accountId);
 
     BankAccount findByIban(String iban);
