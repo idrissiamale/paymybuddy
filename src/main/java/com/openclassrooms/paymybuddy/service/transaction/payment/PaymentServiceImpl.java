@@ -34,7 +34,6 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentRepository.findByUserId(userId);
     }
 
-
     @Override
     public List<Payment> findAllPayments() {
         return paymentRepository.findAll();

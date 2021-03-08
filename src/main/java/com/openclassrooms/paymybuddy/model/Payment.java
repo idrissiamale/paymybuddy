@@ -1,6 +1,7 @@
 package com.openclassrooms.paymybuddy.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @DiscriminatorValue(value = "PAYMENT")
 public class Payment extends Transaction {
