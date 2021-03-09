@@ -1,8 +1,6 @@
 package com.openclassrooms.paymybuddy.web;
 
 import com.openclassrooms.paymybuddy.service.user.UserService;
-import com.openclassrooms.paymybuddy.web.dto.UserRegistrationDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,8 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/registration")
 public class UserRegistrationController {
-    @Autowired
+
     private UserService userService;
+
+    public UserRegistrationController(UserService userService) {
+        super();
+        this.userService = userService;
+    }
 
     @ModelAttribute("user")
     public UserRegistrationDto userRegistrationDto() {
@@ -26,8 +29,8 @@ public class UserRegistrationController {
     }
 
     @PostMapping
-    public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto userRegistrationDto) {
-        userService.saveUser(userRegistrationDto);
+    public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto) {
+        userService.save(registrationDto);
         return "redirect:/registration?success";
     }
 }

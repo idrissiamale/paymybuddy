@@ -1,24 +1,19 @@
 package com.openclassrooms.paymybuddy.service.user;
 
-import com.openclassrooms.paymybuddy.exception.BadArgumentException;
 import com.openclassrooms.paymybuddy.exception.ResourceNotFoundException;
 import com.openclassrooms.paymybuddy.model.User;
-import com.openclassrooms.paymybuddy.web.dto.UserRegistrationDto;
+import com.openclassrooms.paymybuddy.web.UserRegistrationDto;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface UserService {
-    User saveUser(UserRegistrationDto userRegistrationDto);
+public interface UserService extends UserDetailsService {
+    User save(UserRegistrationDto userRegistrationDto);
 
     List<User> findAll();
 
     User findById(Integer id) throws ResourceNotFoundException;
 
-    User findByEmail(String email) throws ResourceNotFoundException;
-
-    User findByEmailAndPassword(String email, String password);
-
-    User save(User user) throws BadArgumentException;
 
     List<User> saveAll(List<User> users);
 
